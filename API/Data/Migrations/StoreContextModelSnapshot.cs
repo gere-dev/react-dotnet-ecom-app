@@ -45,7 +45,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("MyProduct");
+                    b.ToTable("Products");
                 });
 #pragma warning restore 612, 618
         }

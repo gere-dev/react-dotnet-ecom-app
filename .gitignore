@@ -4,7 +4,7 @@ bin/
 project.lock.json
 project.fragment.lock.json
 artifacts/
-
+store.db
 
 # Visual Studio Code
 .vscode/
