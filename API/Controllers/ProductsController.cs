@@ -9,20 +9,20 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly StoreContext context;
+        private readonly StoreContext _context;
 
         // Constructor for ProductsController, receiving a StoreContext instance through dependency injection
         public ProductsController(StoreContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
         // GET api/products
         [HttpGet]
-        public ActionResult<List<Product>> GetProducts()
+        public async Task<ActionResult<List<Product>>> GetProducts()
         {
             // Retrieve all products from the database
-            var products = context.Products.ToList();
+            var products = await _context.Products.ToListAsync();
 
             // Return the list of products as an HTTP 200 OK response
             return Ok(products);
@@ -30,10 +30,10 @@ namespace API.Controllers
 
         // GET api/products/{id}
         [HttpGet("{id}")]
-        public ActionResult<Product> GetProduct(int id)
+        public async Task<ActionResult<Product>> GetProduct(int id)
         {
             // Find a product by its ID in the database
-            var product = context.Products.Find(id);
+            var product = await _context.Products.FindAsync(id);
 
             // Check if the product was found
             if (product == null)
