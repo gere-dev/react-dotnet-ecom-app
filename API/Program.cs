@@ -1,14 +1,11 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using API.Data;
-using Microsoft.Extensions.Logging;
-using System;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
 
+builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -26,23 +23,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseAuthorization();
 
-using var scope = app.Services.CreateScope();
-var serviceProvider = scope.ServiceProvider;
-var context = serviceProvider.GetRequiredService<StoreContext>();
-var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+app.MapControllers();
+
+var scope = app.Services.CreateScope();
+var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
+var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 try
 {
-    // Apply any pending migrations
     context.Database.Migrate();
-
-    // Seed the database with initial data
     DbInitializer.Initialize(context);
 }
 catch (Exception ex)
 {
-    logger.LogError(ex, "A problem occurred during migration or seeding");
+    logger.LogError(ex, "A problem occurred during migration");
 }
 
 app.Run();
