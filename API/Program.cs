@@ -32,8 +32,12 @@ var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 try
 {
-    context.Database.Migrate();
-    DbInitializer.Initialize(context);
+    bool runDbInitializer = builder.Configuration.GetValue<bool>("RunDbInitializer", false);
+    if (runDbInitializer)
+    {
+        context.Database.Migrate();
+        DbInitializer.Initialize(context);
+    }
 }
 catch (Exception ex)
 {
