@@ -7,9 +7,9 @@ interface Props {
 const ProductsList = ({ products }: Props) => {
   return (
     <>
-      <ul className="flex flex-col gap-3">
+      <ul className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
         {products.map((product) => (
-          <ProductCard product={product} />
+          <ProductCard key={product.id} product={product} />
         ))}
       </ul>
     </>

@@ -7,7 +7,7 @@ interface Props {
 }
 const Catalog = ({ products, handleAddProduct }: Props) => {
   return (
-    <div className="max-width mx-auto py-3">
+    <div className="max-width mx-auto py-3 px-2">
       <ProductsList products={products} />
       <button
         className="px-3 py-2 bg-blue-500 text-white rounded"
