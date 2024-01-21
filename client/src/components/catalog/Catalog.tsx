@@ -1,20 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Product } from "../../types";
 import ProductsList from "./ProductsList";
-interface Props {
-  products: Product[];
-  handleAddProduct: () => void;
-}
-const Catalog = ({ products, handleAddProduct }: Props) => {
+import { Products } from "../../products";
+
+const Catalog = () => {
+  const [products, setProducts] = useState<Products[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5027/api/products")
+      .then((response) => response.json())
+      .then((data) => setProducts(data));
+  }, []);
+
   return (
     <div className="max-width mx-auto py-3 px-2">
       <ProductsList products={products} />
-      <button
-        className="px-3 py-2 bg-blue-500 text-white rounded"
-        onClick={handleAddProduct}
-      >
-        Add Product
-      </button>
     </div>
   );
 };

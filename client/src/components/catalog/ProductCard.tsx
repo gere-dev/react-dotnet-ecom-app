@@ -22,7 +22,9 @@ const ProductCard = ({ product }: Props) => {
         src={product.pictureUrl}
         alt=""
       />
-      <span className="text-left text-xl w-full">{product.price}</span>
+      <span className="text-left text-xl w-full">
+        ${(product.price / 100).toFixed(2)}
+      </span>
 
       <div className="w-full  flex flex-start gap-4">
         <button className="text-blue-600 text-xs font-semibold">
