@@ -1,5 +1,5 @@
 import { Nav } from "../types/NavTypes";
-
+//Nav
 export const navLink: Nav[] = [
   { path: "/", title: "home" },
   { path: "/about", title: "about" },
@@ -7,3 +7,6 @@ export const navLink: Nav[] = [
   { path: "/login", title: "login" },
   { path: "/register", title: "register" },
 ];
+
+// Server
+export const apiLink = "http://localhost:5027";
