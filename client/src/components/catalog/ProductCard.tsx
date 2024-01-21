@@ -1,5 +1,6 @@
 import React from "react";
 import { Product } from "../../types/ProuctTypes";
+import { Link } from "react-router-dom";
 
 interface Props {
   product: Product;
@@ -30,7 +31,12 @@ const ProductCard = ({ product }: Props) => {
         <button className="text-blue-600 text-xs font-semibold">
           ADD TO CART
         </button>
-        <button className="text-blue-600 text-xs font-semibold">VIEW</button>
+        <Link
+          to={`catalog/${product.id}`}
+          className="text-blue-600 text-xs font-semibold"
+        >
+          VIEW
+        </Link>
       </div>
     </li>
   );
