@@ -1,4 +1,3 @@
-import { apiLink } from "./../utils/constants";
 import axios, { AxiosResponse } from "axios";
 
 axios.defaults.baseURL = "http://localhost:5027/api/";
@@ -17,8 +16,17 @@ const Catalog = {
   details: (id: number) => requests.get(`products/${id}`),
 };
 
+const TestError = {
+  get400Error: () => requests.get("buggy/bad-request"),
+  get401Error: () => requests.get("buggy/anauthorized"),
+  get404Error: () => requests.get("buggy/not-found"),
+  get500Error: () => requests.get("buggy/server-error"),
+  getValidationError: () => requests.get("buggy/validation-error"),
+};
+
 const agent = {
   Catalog,
+  TestError,
 };
 
 export default agent;
