@@ -8,21 +8,18 @@ function App() {
   const [products, setProducts] = useState<Products[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:5027/api/products')
-      .then(response => response.json())
-      .then(data => setProducts(data))
-  }, [])
+    fetch("http://localhost:5027/api/products")
+      .then((response) => response.json())
+      .then((data) => setProducts(data));
+  }, []);
 
-
-
-
-
-  return <div>
+  return (
     <div>
-      <Catalog products={products} handleAddProduct={()=> {}} />
+      <div>
+        <Catalog products={products} handleAddProduct={() => {}} />
+      </div>
     </div>
-
-  </div>;
+  );
 }
 
 export default App;

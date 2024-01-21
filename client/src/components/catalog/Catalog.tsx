@@ -1,5 +1,6 @@
 import React from "react";
 import { Product } from "../../types";
+import ProductsList from "./ProductsList";
 interface Props {
   products: Product[];
   handleAddProduct: () => void;
@@ -7,12 +8,13 @@ interface Props {
 const Catalog = ({ products, handleAddProduct }: Props) => {
   return (
     <>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>{product.name}</li>
-        ))}
-      </ul>
-      <button onClick={handleAddProduct}>Add Product</button>
+      <ProductsList products={products} />
+      <button
+        className="px-3 py-2 bg-blue-500 text-white rounded"
+        onClick={handleAddProduct}
+      >
+        Add Product
+      </button>
     </>
   );
 };
