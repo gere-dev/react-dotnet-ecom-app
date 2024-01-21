@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { Products } from "./products";
 import Catalog from "./components/catalog/Catalog";
+import Header from "./components/header/Header";
 
 function App() {
   const [products, setProducts] = useState<Products[]>([]);
@@ -16,6 +17,7 @@ function App() {
   return (
     <div>
       <div>
+        <Header />
         <Catalog products={products} handleAddProduct={() => {}} />
       </div>
     </div>
