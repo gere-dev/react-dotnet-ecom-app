@@ -20,7 +20,18 @@ const Catalog = () => {
 
   if (loading) return <h2>loading...</h2>;
   if (!product) return <h2>product not found!</h2>;
-  return <div>{product.name}</div>;
+  return (
+    <div className="flex mx-auto max-width w-full px-3">
+      <img
+        className="flex-1 border overflow-hidden"
+        src={product.pictureUrl}
+        alt=""
+      />
+      <div className="flex-1 border">
+        <span className="block font-semibold text-xl ">{product.name}</span>
+      </div>
+    </div>
+  );
 };
 
 export default Catalog;

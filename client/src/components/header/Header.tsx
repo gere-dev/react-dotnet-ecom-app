@@ -11,9 +11,9 @@ const Header = () => {
 
         {/* main nav links */}
         <ul className="flex gap-3">
-          {navLink.slice(0, 3).map((nav) => {
+          {navLink.slice(0, 3).map((nav, index) => {
             return (
-              <li>
+              <li key={index}>
                 <Link className="capitalize" to={nav.path}>
                   {nav.title}
                 </Link>
@@ -24,9 +24,9 @@ const Header = () => {
 
         {/* auth links */}
         <ul className="flex gap-3">
-          {navLink.slice(3).map((nav) => {
+          {navLink.slice(3).map((nav, index) => {
             return (
-              <li>
+              <li key={index}>
                 <Link className="capitalize" to={nav.path}>
                   {nav.title}
                 </Link>
