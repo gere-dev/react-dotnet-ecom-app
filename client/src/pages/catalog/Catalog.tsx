@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { apiLink } from "../../utils/constants";
 import { Product } from "../../types/ProuctTypes";
+import agent from "../../api/agent";
 
 const Catalog = () => {
   const { id } = useParams<{ id: string }>();
@@ -11,11 +12,11 @@ const Catalog = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`${apiLink}/api/products/${id}`)
-      .then((response) => setProduct(response.data))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
+    id &&
+      agent.Catalog.details(parseInt(id))
+        .then((response) => setProduct(response))
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
   }, []);
 
   if (loading) return <h2>loading...</h2>;
