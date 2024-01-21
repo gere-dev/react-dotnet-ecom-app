@@ -8,8 +8,23 @@ const Header = () => {
       <div className="max-width h-full w-full  mx-auto flex items-center px-3 justify-between">
         {/* logo */}
         <span>Logo</span>
+
+        {/* main nav links */}
         <ul className="flex gap-3">
-          {navLink.map((nav) => {
+          {navLink.slice(0, 3).map((nav) => {
+            return (
+              <li>
+                <Link className="capitalize" to={nav.path}>
+                  {nav.title}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* auth links */}
+        <ul className="flex gap-3">
+          {navLink.slice(3).map((nav) => {
             return (
               <li>
                 <Link className="capitalize" to={nav.path}>
