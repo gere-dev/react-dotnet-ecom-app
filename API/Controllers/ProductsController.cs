@@ -23,6 +23,8 @@ namespace API.Controllers
             // Retrieve all products from the database
             var products = await _context.Products.ToListAsync();
 
+            if (products == null) return NotFound();
+
             // Return the list of products as an HTTP 200 OK response
             return Ok(products);
         }
