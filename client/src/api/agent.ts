@@ -5,32 +5,64 @@ axios.defaults.baseURL = "http://localhost:5027/api/";
 
 const responseBody = (response: AxiosResponse) => response.data;
 
+const handleServerError = (error: AxiosError) => {
+  const { data, status } = error.response as AxiosResponse;
+  console.log(status, "this is the status");
+
+  switch (status) {
+    case 400:
+      toast.error(data.title);
+      break;
+    case 401:
+      toast.error(data.title);
+      break;
+    case 404:
+      toast.error(data.title);
+      break;
+    case 500:
+      throw error; // Let the error boundary handle this error
+    default:
+      break;
+  }
+
+  return Promise.reject(error.response);
+};
+
 axios.interceptors.response.use(
   (response) => {
     return response;
   },
   (error: AxiosError) => {
-    const { data, status } = error.response as AxiosResponse;
-    console.log(status, "this is the status");
-    switch (status) {
-      case 400:
-        toast.error(data.title);
-        break;
-      case 401:
-        toast.error(data.title);
-        break;
-      case 404:
-        toast.error(data.title);
-        break;
-      case 500:
-        toast.error(data.title);
-        break;
-      default:
-        break;
-    }
-    return Promise.reject(error.response);
+    return handleServerError(error);
   }
 );
+
+// axios.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error: AxiosError) => {
+//     const { data, status } = error.response as AxiosResponse;
+//     console.log(status, "this is the status");
+//     switch (status) {
+//       case 400:
+//         toast.error(data.title);
+//         break;
+//       case 401:
+//         toast.error(data.title);
+//         break;
+//       case 404:
+//         toast.error(data.title);
+//         break;
+//       case 500:
+//         window.location.href = "/server-error";
+//         break;
+//       default:
+//         break;
+//     }
+//     return Promise.reject(error.response);
+//   }
+// );
 
 const requests = {
   get: (url: string) => axios.get(url).then(responseBody),

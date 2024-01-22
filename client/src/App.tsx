@@ -6,6 +6,7 @@ import Catalog from "./pages/catalog/Catalog";
 import About from "./pages/about/About";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ServerError from "./pages/errors/ServerError";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/catalog/:id" element={<Catalog />} />
+        <Route path="/server-error" element={<ServerError />} />
       </Routes>
     </>
   );
