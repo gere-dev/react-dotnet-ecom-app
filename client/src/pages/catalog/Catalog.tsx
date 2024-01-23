@@ -1,7 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { apiLink } from "../../utils/constants";
 import { Product } from "../../types/ProuctTypes";
 import agent from "../../api/agent";
 

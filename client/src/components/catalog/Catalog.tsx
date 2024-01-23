@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Product } from "../../types/ProuctTypes";
 import ProductsList from "./ProductsList";
 import { Products } from "../../products";
 import agent from "../../api/agent";
