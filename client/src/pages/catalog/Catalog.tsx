@@ -10,15 +10,18 @@ const Catalog = () => {
 
   useEffect(() => {
     setLoading(true);
+
     id &&
       agent.Catalog.details(parseInt(id))
         .then((response) => setProduct(response))
         .catch((error) => console.log(error.response))
         .finally(() => setLoading(false));
-  }, []);
+  }, [id]);
 
   if (loading) return <h2>loading...</h2>;
+
   if (!product) return <h2>product not found!</h2>;
+
   return (
     <div className="flex mx-auto max-width w-full px-3 gap-3">
       <img
