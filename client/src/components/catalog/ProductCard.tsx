@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Product } from "../../types/ProuctTypes";
 import { Link } from "react-router-dom";
 import agent from "../../api/agent";
+import { PulseLoader } from "react-spinners";
 
 interface Props {
   product: Product;
@@ -28,7 +29,7 @@ const ProductCard = ({ product }: Props) => {
       <span className="text-left text-xl w-full">${(product.price / 100).toFixed(2)}</span>
 
       <div className="w-full  flex flex-start gap-4">
-        <button className="text-blue-600 text-xs font-semibold">ADD TO CART</button>
+        {loading ? <PulseLoader color="#36d7b7" /> : <button className="text-blue-600 text-xs font-semibold">ADD TO CART</button>}
         <Link to={`catalog/${product.id}`} className="text-blue-600 text-xs font-semibold">
           VIEW
         </Link>
