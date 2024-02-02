@@ -28,7 +28,10 @@ namespace API.Controllers
 
         [HttpPost] // api/basket?productId=3&quantity=2
         public async Task<ActionResult<BasketDto>> AddItemBasket(int productId, int quantity)
+
         {
+
+            Console.WriteLine($"Adding item to basket. ProductId: {productId}, Quantity: {quantity}");
             var basket = await RetrieveBasket();
 
             if (basket == null) basket = CreateBasket();
@@ -42,7 +45,7 @@ namespace API.Controllers
             var result = await _context.SaveChangesAsync() > 0;
 
             // if (result) return StatusCode(201);
-            if (result) return CreatedAtRoute("GetBasket", MapBasketToDto(basket));
+            if (result) return CreatedAtRoute("GetBaskets", MapBasketToDto(basket));
 
             return BadRequest(new ProblemDetails { Title = "Problem saving Item to basket" });
         }
