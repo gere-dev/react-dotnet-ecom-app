@@ -9,6 +9,7 @@ interface StoreContextValue {
 
 export const StoreContext = createContext<StoreContextValue | undefined>(undefined);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useStoreContext() {
   const context = useContext(StoreContext);
 
@@ -31,16 +32,12 @@ export function StoreProvider({ children }: PropsWithChildren<unknown>) {
       const updateItems = basket.items.filter((product) => product.productId !== productId);
 
       setBasket((prevState) => {
-        if (!prevState) {
-          // Handle the case when prevState is null
-          return prevState;
-        }
-
         return {
-          ...prevState,
+          ...prevState!,
           items: updateItems,
         };
       });
     }
   }
+  return <StoreContext.Provider value={{ basket, setBasket, removeItem }}>{children}</StoreContext.Provider>;
 }
