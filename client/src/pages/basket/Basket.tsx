@@ -3,6 +3,7 @@ import { BasketItemsType, BasketType } from "../../types/BasketType";
 import agent from "../../api/agent";
 import { ClipLoader } from "react-spinners";
 import { MdDelete } from "react-icons/md";
+import Loading from "../../components/Loading";
 
 const Basket = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -15,12 +16,7 @@ const Basket = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading)
-    return (
-      <div className="max-width h-[calc(100vh-56px)] w-full bg-gray-400 flex justify-center items-center border">
-        <ClipLoader />
-      </div>
-    );
+  if (loading) return <Loading />;
 
   if (!basket) return <h2>Your Basket is Empty</h2>;
 

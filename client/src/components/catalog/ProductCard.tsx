@@ -3,6 +3,7 @@ import { Product } from "../../types/ProuctTypes";
 import { Link } from "react-router-dom";
 import agent from "../../api/agent";
 import { ClipLoader } from "react-spinners";
+import { useStoreContext } from "../../contexts/StoreContext";
 
 interface Props {
   product: Product;
@@ -11,9 +12,13 @@ interface Props {
 const ProductCard = ({ product }: Props) => {
   const [loading, setLoading] = useState(false);
 
+  const { setBasket } = useStoreContext();
+
   function handleAddItem(productId: number) {
     setLoading(true);
+
     agent.Basket.addItem(productId)
+      .then((basket) => setBasket(basket))
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
   }

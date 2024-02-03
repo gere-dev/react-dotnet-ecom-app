@@ -12,6 +12,7 @@ import { useStoreContext } from "./contexts/StoreContext";
 import { useEffect, useState } from "react";
 import { getCookie } from "./utils/utils";
 import agent from "./api/agent";
+import Loading from "./components/Loading";
 
 function App() {
   const { setBasket } = useStoreContext();
@@ -24,8 +25,14 @@ function App() {
         .then((basket) => setBasket(basket))
         .catch((error) => console.log(error))
         .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
     }
   }, [setBasket]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
