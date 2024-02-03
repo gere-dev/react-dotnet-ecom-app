@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { BasketItemsType, BasketType } from "../../types/BasketType";
-import agent from "../../api/agent";
-import { ClipLoader } from "react-spinners";
 import { MdDelete } from "react-icons/md";
-import Loading from "../../components/Loading";
 import { useStoreContext } from "../../contexts/StoreContext";
+import { CgAdd, CgRemove } from "react-icons/cg";
+import { IoAddOutline, IoRemoveOutline } from "react-icons/io5";
 
 const Basket = () => {
   const { basket } = useStoreContext();
@@ -26,9 +23,25 @@ const Basket = () => {
         <tbody>
           {basket.items.map((item) => (
             <tr key={item.productId}>
-              <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="flex items-center gap-2">
+                  <img className="max-h-[50px]" src={item.pictureUrl} alt="" />
+                  <span>{item.name}</span>
+                </div>
+              </td>
+
               <td className="px-6 py-4 whitespace-nowrap">{item.price / 100}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{item.quantity}</td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="flex items-center gap-2">
+                  <button className="text-red-700">
+                    <IoRemoveOutline />
+                  </button>
+                  {item.quantity}
+                  <button className="text-blue-900">
+                    <IoAddOutline />
+                  </button>
+                </div>
+              </td>
               <td className="px-6 py-4 whitespace-nowrap">{((item.price / 100) * item.quantity).toFixed(2)}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <button className="text-red-500 lex justify-center w-full h-full">
