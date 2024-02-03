@@ -7,23 +7,25 @@ import { MdDelete } from "react-icons/md";
 const Basket = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [basket, setBasket] = useState<BasketType | null>(null);
+
   useEffect(() => {
     agent.Basket.get()
       .then((basket) => setBasket(basket))
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
   }, []);
-  console.log(loading);
+
   if (loading)
     return (
-      <div className="h-full w-full bg-gray-400 flex justify-center items-center border">
+      <div className="max-width h-[calc(100vh-56px)] w-full bg-gray-400 flex justify-center items-center border">
         <ClipLoader />
       </div>
     );
 
   if (!basket) return <h2>Your Basket is Empty</h2>;
+
   return (
-    <div className="max-w-full mx-auto py-3 px-2 overflow-x-auto">
+    <div className="max-width mx-auto py-3 px-2 overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
           <tr>
