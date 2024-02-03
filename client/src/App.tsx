@@ -8,8 +8,25 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ServerError from "./pages/errors/ServerError";
 import Basket from "./pages/basket/Basket";
+import { useStoreContext } from "./contexts/StoreContext";
+import { useEffect, useState } from "react";
+import { getCookie } from "./utils/utils";
+import agent from "./api/agent";
 
 function App() {
+  const { setBasket } = useStoreContext();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const buyerId = getCookie("buyerId");
+    if (buyerId) {
+      agent.Basket.get()
+        .then((basket) => setBasket(basket))
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
+    }
+  }, [setBasket]);
+
   return (
     <>
       <Header />
