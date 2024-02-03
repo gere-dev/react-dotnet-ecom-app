@@ -4,19 +4,10 @@ import agent from "../../api/agent";
 import { ClipLoader } from "react-spinners";
 import { MdDelete } from "react-icons/md";
 import Loading from "../../components/Loading";
+import { useStoreContext } from "../../contexts/StoreContext";
 
 const Basket = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [basket, setBasket] = useState<BasketType | null>(null);
-
-  useEffect(() => {
-    agent.Basket.get()
-      .then((basket) => setBasket(basket))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading) return <Loading />;
+  const { basket } = useStoreContext();
 
   if (!basket) return <h2>Your Basket is Empty</h2>;
 
