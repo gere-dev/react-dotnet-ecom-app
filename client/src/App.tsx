@@ -7,18 +7,16 @@ import About from "./pages/about/About";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ServerError from "./pages/errors/ServerError";
+import Basket from "./pages/basket/Basket";
 
 function App() {
   return (
     <>
       <Header />
-      <ToastContainer
-        position="bottom-right"
-        toastClassName="dark-toast"
-        autoClose={2000}
-      />
+      <ToastContainer position="bottom-right" toastClassName="dark-toast" autoClose={2000} />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/basket" element={<Basket />} />
         <Route path="/about" element={<About />} />
         <Route path="/catalog/:id" element={<Catalog />} />
         <Route path="/server-error" element={<ServerError />} />
