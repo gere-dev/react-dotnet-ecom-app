@@ -4,6 +4,7 @@ import { CgAdd, CgRemove } from 'react-icons/cg';
 import { IoAddOutline, IoRemoveOutline } from 'react-icons/io5';
 import { useState } from 'react';
 import agent from '../../api/agent';
+import { currencyFormat } from '../../utils/utils';
 
 const Basket = () => {
   const { basket, setBasket, removeItem } = useStoreContext();
@@ -49,7 +50,7 @@ const Basket = () => {
                 </div>
               </td>
 
-              <td className='px-6 py-4 whitespace-nowrap'>{item.price / 100}</td>
+              <td className='px-6 py-4 whitespace-nowrap'>{currencyFormat(item.price)}</td>
               <td className='px-6 py-4 whitespace-nowrap'>
                 <div className='flex items-center gap-2'>
                   <button className='text-red-700' onClick={() => handleRemoveItem(item.productId)}>
@@ -61,7 +62,7 @@ const Basket = () => {
                   </button>
                 </div>
               </td>
-              <td className='px-6 py-4 whitespace-nowrap'>{((item.price / 100) * item.quantity).toFixed(2)}</td>
+              <td className='px-6 py-4 whitespace-nowrap'>{currencyFormat(item.price * item.quantity)}</td>
               <td className='px-6 py-4 whitespace-nowrap'>
                 <button onClick={() => handleRemoveItem(item.productId, item.quantity)} className='text-red-500 lex justify-center w-full h-full'>
                   <MdDelete />
