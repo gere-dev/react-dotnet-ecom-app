@@ -1,6 +1,13 @@
-import React from 'react';
+import { BasketType } from '../../types/BasketType';
+import { currencyFormat } from '../../utils/utils';
 
-const BasketSummary = () => {
+interface Props {
+  basket: BasketType;
+}
+const BasketSummary = ({ basket }: Props) => {
+  const subTotal = basket?.items.reduce((sum, item) => sum + item.quantity * item.price, 0) ?? 0;
+  const deliveryFee = subTotal > 10000 ? 0 : 500;
+  const total = subTotal + deliveryFee;
   return (
     <div className='flex justify-between w-full'>
       {/* Empty grid item to push the ul to the end */}
@@ -8,9 +15,9 @@ const BasketSummary = () => {
 
       {/* COST */}
       <ul className='border flex-1  rounded-b'>
-        <CostList title='subtotal' cost={0} />
-        <CostList title='delivery fee' cost={0} />
-        <CostList title='total' cost={0} />
+        <CostList title='subtotal' cost={currencyFormat(subTotal)} />
+        <CostList title='delivery fee' cost={currencyFormat(deliveryFee)} />
+        <CostList title='total' cost={currencyFormat(total)} />
 
         <li className='text-sm italic py-2 px-2'>*Order over $100 qualify for free shipping</li>
       </ul>
@@ -22,7 +29,7 @@ export default BasketSummary;
 
 type CostListType = {
   title: string;
-  cost: number;
+  cost: string;
 };
 
 const CostList = ({ title, cost }: CostListType) => {

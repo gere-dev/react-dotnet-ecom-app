@@ -35,7 +35,7 @@ const Index = () => {
   return (
     <section className='max-width mx-auto py-3 px-2 overflow-x-auto'>
       <BasketItems basket={basket} handleAddItem={handleAddItem} handleRemoveItem={handleRemoveItem} />
-      <BasketSummary />
+      <BasketSummary basket={basket} />
     </section>
   );
 };
