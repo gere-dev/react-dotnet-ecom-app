@@ -26,17 +26,17 @@ export function StoreProvider({ children }: PropsWithChildren<unknown>) {
   function removeItem(productId: number, quantity: number) {
     if (!basket) return;
 
-    const item = basket.items.find((product) => product.productId === productId);
+    const updatedItems = basket.items.map((product) =>
+      product.productId === productId ? { ...product, quantity: Math.max(0, product.quantity - quantity) } : product
+    );
 
-    if (basket.id && item?.productId) {
-      const updateItems = basket.items.filter((product) => product.productId !== productId);
+    const hasItem = basket.items.some((product) => product.productId === productId);
 
-      setBasket((prevState) => {
-        return {
-          ...prevState!,
-          items: updateItems,
-        };
-      });
+    if (hasItem) {
+      setBasket((prevState) => ({
+        ...prevState!,
+        items: updatedItems.filter((product) => product.quantity > 0),
+      }));
     }
   }
   return <StoreContext.Provider value={{ basket, setBasket, removeItem }}>{children}</StoreContext.Provider>;
