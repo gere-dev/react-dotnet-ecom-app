@@ -33,23 +33,23 @@ const Catalog = () => {
   }
 
   function handleUpdateCart() {
-    const productId = product?.id;
-    setSubmitted(true);
-    if (productId !== undefined) {
-      if (!item || quantity > item.quantity) {
-        const updatedQuantity = item ? quantity - item.quantity : quantity;
+    if (!product) return;
 
-        agent.Basket.addItem(productId, updatedQuantity)
-          .then((basket) => setBasket(basket))
-          .catch((error) => console.log(error))
-          .finally(() => setSubmitted(false));
-      } else {
-        const updatedQuantity = item.quantity - quantity;
-        agent.Basket.removeItem(productId, updatedQuantity)
-          .then(() => removeItem(productId, updatedQuantity))
-          .catch((error) => console.log(error))
-          .finally(() => setSubmitted(false));
-      }
+    const productId = product.id;
+    setSubmitted(true);
+    if (!item || quantity > item.quantity) {
+      const updatedQuantity = item ? quantity - item.quantity : quantity;
+
+      agent.Basket.addItem(productId, updatedQuantity)
+        .then((basket) => setBasket(basket))
+        .catch((error) => console.log(error))
+        .finally(() => setSubmitted(false));
+    } else {
+      const updatedQuantity = item.quantity - quantity;
+      agent.Basket.removeItem(productId, updatedQuantity)
+        .then(() => removeItem(productId, updatedQuantity))
+        .catch((error) => console.log(error))
+        .finally(() => setSubmitted(false));
     }
   }
   const isDisabled = quantity === item?.quantity;
