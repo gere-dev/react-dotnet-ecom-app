@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { BasketType } from '../../types/BasketType';
 import { currencyFormat } from '../../utils/utils';
 
@@ -8,6 +9,8 @@ const BasketSummary = ({ basket }: Props) => {
   const subTotal = basket?.items.reduce((sum, item) => sum + item.quantity * item.price, 0) ?? 0;
   const deliveryFee = subTotal > 10000 ? 0 : 500;
   const total = subTotal + deliveryFee;
+
+  const nav = useNavigate();
   return (
     <div className='flex justify-between w-full'>
       {/* Empty grid item to push the ul to the end */}
@@ -20,6 +23,9 @@ const BasketSummary = ({ basket }: Props) => {
         <CostList title='total' cost={currencyFormat(total)} />
 
         <li className='text-sm italic py-2 px-2'>*Order over $100 qualify for free shipping</li>
+        <button onClick={() => nav('/checkout')} className='bg-blue-500 text-white w-full py-2 text-sm font-semibold'>
+          CHECKOUT
+        </button>
       </ul>
     </div>
   );
