@@ -9,13 +9,20 @@ namespace API.Entities
 
         public void AddItem(Product product, int quantity)
         {
-            if (Items.All(item => item.ProductId != product.id))
+            var existingItem = Items.FirstOrDefault(item => item.ProductId == product.id);
+
+            if (existingItem == null)
             {
+                // If the item doesn't exist, add a new one
                 Items.Add(new BasketItem { Product = product, Quantity = quantity });
             }
-            var existingItem = Items.FirstOrDefault(item => item.ProductId == product.id);
-            if (existingItem != null) existingItem.Quantity += quantity;
+            else
+            {
+                // If the item already exists, update the quantity
+                existingItem.Quantity += quantity;
+            }
         }
+
 
         public void RemoveItem(int productId, int quantity)
         {

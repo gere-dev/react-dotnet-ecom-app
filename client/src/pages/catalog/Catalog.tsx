@@ -53,6 +53,7 @@ const Catalog = () => {
     }
   }
   const isDisabled = quantity === item?.quantity;
+  console.log(quantity);
 
   if (!product) return <h2>product not found!</h2>;
 
@@ -69,7 +70,7 @@ const Catalog = () => {
             disabled={isDisabled || (!item && quantity === 0)}
             onClick={handleUpdateCart}
             className={`border ${
-              isDisabled ? 'bg-gray-400' : 'bg-blue-500'
+              isDisabled || (!item && quantity === 0) ? 'bg-gray-400' : 'bg-blue-500'
             } rounded text-white uppercase p-2 px-4 text-sm w-40 h-11 flex justify-center items-center`}
           >
             {submitted ? <ClipLoader color='#fff' size={15} /> : item ? 'update quantity' : 'add to cart'}
