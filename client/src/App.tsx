@@ -14,22 +14,25 @@ import { getCookie } from './utils/utils';
 import agent from './api/agent';
 import Loading from './components/Loading';
 import Checkout from './pages/Checkout';
+import { setBasket } from './features/basketSlice';
+import { useAppDispatch } from './features/store';
 
 function App() {
-  const { setBasket } = useStoreContext();
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const buyerId = getCookie('buyerId');
     if (buyerId) {
       agent.Basket.get()
-        .then((basket) => setBasket(basket))
+        .then((basket) => dispatch(setBasket(basket)))
         .catch((error) => console.log(error))
         .finally(() => setLoading(false));
     } else {
       setLoading(false);
     }
-  }, [setBasket]);
+  }, [dispatch]);
 
   if (loading) {
     return <Loading />;
