@@ -44,7 +44,7 @@ const ProductCard = ({ product }: Props) => {
             ADD TO CART
           </button>
         )}
-        <Link to={`catalog/${product.id}`} className='text-blue-600 text-xs font-semibold'>
+        <Link to={`product-detail/${product.id}`} className='text-blue-600 text-xs font-semibold'>
           VIEW
         </Link>
       </div>

@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './components/header/Header';
 import Home from './pages/home/Home';
-import Catalog from './pages/ProductDetail/ProductDetail';
+import ProductDetail from './pages/ProductDetail/ProductDetail';
 import About from './pages/about/About';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -46,7 +46,8 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/basket' element={<Basket />} />
         <Route path='/about' element={<About />} />
-        <Route path='/catalog/:id' element={<Catalog />} />
+        <Route path='/product-detail/:id' element={<ProductDetail />} />
+        <Route path='/checkout' element={<Checkout />} />
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/server-error' element={<ServerError />} />
       </Routes>

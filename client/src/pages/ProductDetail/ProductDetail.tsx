@@ -4,15 +4,19 @@ import { Product } from '../../types/ProuctTypes';
 import agent from '../../api/agent';
 import { useStoreContext } from '../../contexts/StoreContext';
 import { ClipLoader } from 'react-spinners';
+import { useAppDispatch, useAppSelector } from '../../features/store';
+import { removeItem, setBasket } from '../../features/basketSlice';
 
-const Catalog = () => {
+const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(0);
   const [submitted, setSubmitted] = useState<boolean>(false);
 
-  const { basket, setBasket, removeItem } = useStoreContext();
+  const { basket } = useAppSelector((state) => state.basket);
+
+  const dispatch = useAppDispatch();
 
   const item = basket?.items.find((item) => item?.productId == product?.id);
 
@@ -41,13 +45,13 @@ const Catalog = () => {
       const updatedQuantity = item ? quantity - item.quantity : quantity;
 
       agent.Basket.addItem(productId, updatedQuantity)
-        .then((basket) => setBasket(basket))
+        .then((basket) => dispatch(setBasket(basket)))
         .catch((error) => console.log(error))
         .finally(() => setSubmitted(false));
     } else {
       const updatedQuantity = item.quantity - quantity;
       agent.Basket.removeItem(productId, updatedQuantity)
-        .then(() => removeItem(productId, updatedQuantity))
+        .then(() => dispatch(removeItem({ productId, quantity: updatedQuantity })))
         .catch((error) => console.log(error))
         .finally(() => setSubmitted(false));
     }
@@ -81,4 +85,4 @@ const Catalog = () => {
   );
 };
 
-export default Catalog;
+export default ProductDetail;
