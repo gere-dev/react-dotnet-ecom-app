@@ -3,26 +3,28 @@ import { Product } from '../../types/ProuctTypes';
 import { Link } from 'react-router-dom';
 import agent from '../../api/agent';
 import { ClipLoader } from 'react-spinners';
-import { useAppDispatch } from '../../features/store';
-import { setBasket } from '../../features/basketSlice';
+import { useAppDispatch, useAppSelector } from '../../features/store';
+import { addBasketItemAsync, setBasket } from '../../features/basketSlice';
 
 interface Props {
   product: Product;
 }
 
 const ProductCard = ({ product }: Props) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
-
-  function handleAddItem(productId: number) {
+  const handleAddToCart = async () => {
     setLoading(true);
+    try {
+      await dispatch(addBasketItemAsync({ productId: product.id, quantity: 1 }));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false); // Reset local state after adding to cart action is completed
+    }
+  };
 
-    agent.Basket.addItem(productId)
-      .then((basket) => dispatch(setBasket(basket)))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-  }
   return (
     <li className='flex flex-col text-center gap-3 items-center shadow-md rounded-md border p-2' key={product.id}>
       <div className='flex justify-center items-center  gap-2'>
@@ -40,7 +42,7 @@ const ProductCard = ({ product }: Props) => {
             <ClipLoader className='h-full w-full' color='#36d7b7' />
           </button>
         ) : (
-          <button className='text-blue-600 text-xs font-semibold' onClick={() => handleAddItem(product.id)}>
+          <button className='text-blue-600 text-xs font-semibold' onClick={handleAddToCart}>
             ADD TO CART
           </button>
         )}
