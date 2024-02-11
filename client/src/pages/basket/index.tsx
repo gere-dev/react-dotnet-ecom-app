@@ -3,30 +3,37 @@ import agent from '../../api/agent';
 import BasketSummary from './BasketSummary';
 import BasketItems from './BasketItems';
 import { useAppDispatch, useAppSelector } from '../../features/store';
-import { removeItem, setBasket } from '../../features/basketSlice';
+import { addBasketItemAsync, removeBasketItemAsync, setBasket } from '../../features/basketSlice';
 
 const Index = () => {
   const { basket } = useAppSelector((state) => state.basket);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [status, setStatus] = useState<{ adding: boolean; removing: boolean }>({
+    adding: false,
+    removing: false,
+  });
 
   const dispatch = useAppDispatch();
 
-  function handleAddItem(productId: number) {
-    setLoading(true);
-    agent.Basket.addItem(productId)
-      .then((basket) => dispatch(setBasket(basket)))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
+  async function handleAddItem(productId: number) {
+    setStatus((prev) => ({ ...prev, adding: true }));
+    try {
+      await dispatch(addBasketItemAsync({ productId: productId }));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setStatus((prev) => ({ ...prev, adding: false }));
+    }
   }
-  function handleRemoveItem(productId: number, quantity: number = 1) {
-    setLoading(true);
-    agent.Basket.removeItem(productId, quantity)
-      .then(() => dispatch(removeItem({ productId, quantity })))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
+  async function handleRemoveItem(productId: number, quantity: number = 1) {
+    setStatus((prev) => ({ ...prev, removing: true }));
+    try {
+      await dispatch(removeBasketItemAsync({ productId: productId, quantity: quantity }));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setStatus((prev) => ({ ...prev, removing: false }));
+    }
   }
-
-  console.log(basket);
 
   if (!basket?.items.length) return <h2 className='max-width'>Your Basket is Empty</h2>;
 
